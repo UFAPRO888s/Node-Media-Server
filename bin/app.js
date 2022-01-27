@@ -32,11 +32,11 @@ const config = {
     gop_cache: true,
     ping: 30,
     ping_timeout: 60,
-    // ssl: {
-    //   port: 443,
-    //   key: __dirname+'/privatekey.pem',
-    //   cert: __dirname+'/certificate.pem',
-    // }
+    ssl: {
+      port: 443,
+      key: __dirname+'/privatekey.pem',
+      cert: __dirname+'/certificate.pem',
+    }
   },
   http: {
     port: argv.http_port,
@@ -52,11 +52,11 @@ const config = {
   },
   auth: {
     api: true,
-    api_user: 'admin',
-    api_pass: 'admin',
+    api_user: 'ufax',
+    api_pass: 'ufax123456',
     play: false,
     publish: false,
-    secret: 'nodemedia2017privatekey'
+    secret: 'pnckdevapp'
   }
 };
 
