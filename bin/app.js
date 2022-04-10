@@ -1,6 +1,6 @@
-#!/usr/bin/env node 
-
 const NodeMediaServer = require('node-media-server');
+//const fs = require('fs');
+
 
 const config = {
   rtmp: {
@@ -9,31 +9,52 @@ const config = {
     gop_cache: true,
     ping: 30,
     ping_timeout: 60,
+ 
   },
   http: {
     port: 8000,
-    mediaroot: __dirname+'/media',
-    webroot: __dirname+'/www',
+    mediaroot: './media',
     allow_origin: '*',
     api: true
   },
-  https: {
+  https:{
     port: 8443,
-    key: __dirname+'/privatekey.pem',
-    cert: __dirname+'/certificate.pem',
+    key:'./privatekey.pem',
+    cert:'./certificate.pem',
   },
-  auth: {
-    api: true,
-    api_user: 'ufax',
-    api_pass: 'ufax123456',
-    play: false,
-    publish: false,
-    secret: 'pnckdevapp'
+  trans: {
+    //ffmpeg: '/usr/bin/ffmpeg',
+    ffmpeg: '/usr/bin/ffmpeg',
+    tasks: [
+      {
+        app: 'live',
+        vc: "copy",
+        vcParam: [],
+        ac: "aac",
+        acParam: ['-ab', '64k', '-ac', '1', '-ar', '44100'],
+        rtmp:true,
+        rtmpApp:'live2',
+        hls: true,
+        hlsFlags: '[hls_time=2:hls_list_size=3:hls_flags=delete_segments]',
+        dash: true,
+        dashFlags: '[f=dash:window_size=3:extra_window_size=5]'
+      }
+    ]
+    // tasks: [
+    //   {
+    //     app: 'live',
+    //     hls: true,
+    //     hlsFlags: '[hls_time=2:hls_list_size=3:hls_flags=delete_segments]',
+    //     dash: true,
+    //     dashFlags: '[f=dash:window_size=3:extra_window_size=5]',
+    //   },
+    // ],
   }
 };
 
 
 let nms = new NodeMediaServer(config);
+
 nms.run();
 
 nms.on('preConnect', (id, args) => {
@@ -77,4 +98,3 @@ nms.on('postPlay', (id, StreamPath, args) => {
 nms.on('donePlay', (id, StreamPath, args) => {
   console.log('[NodeEvent on donePlay]', `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}`);
 });
-
