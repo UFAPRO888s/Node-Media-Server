@@ -9,7 +9,7 @@ const config = {
     gop_cache: true,
     ping: 30,
     ping_timeout: 60,
- 
+
   },
   http: {
     port: 8000,
@@ -17,39 +17,66 @@ const config = {
     allow_origin: '*',
     api: true
   },
-  https:{
+  https: {
     port: 8443,
-    key:'./privatekey.pem',
-    cert:'./certificate.pem',
+    key: 'D:\\LIVEMASTERALL\\Node-Media-Server\\bin\\privatekey.pem',
+    cert: 'D:\\LIVEMASTERALL\\Node-Media-Server\\bin\\certificate.pem',
+    //key: './privatekey.pem',
+    //cert: './certificate.pem',
   },
   trans: {
-    //ffmpeg: '/usr/bin/ffmpeg',
-    ffmpeg: '/usr/bin/ffmpeg',
+    //ffmpeg: '/usr/local/bin/ffmpeg',
+    ffmpeg: "C:\\ffmpeg\\bin\\ffmpeg.exe",
     tasks: [
       {
-        app: 'live',
-        vc: "copy",
-        vcParam: [],
-        ac: "aac",
-        acParam: ['-ab', '64k', '-ac', '1', '-ar', '44100'],
-        rtmp:true,
-        rtmpApp:'live2',
+        app: 'livefacebook',
         hls: true,
         hlsFlags: '[hls_time=2:hls_list_size=3:hls_flags=delete_segments]',
         dash: true,
         dashFlags: '[f=dash:window_size=3:extra_window_size=5]'
       }
     ]
-    // tasks: [
-    //   {
-    //     app: 'live',
-    //     hls: true,
-    //     hlsFlags: '[hls_time=2:hls_list_size=3:hls_flags=delete_segments]',
-    //     dash: true,
-    //     dashFlags: '[f=dash:window_size=3:extra_window_size=5]',
-    //   },
-    // ],
+  },
+  //   // tasks: [
+  //   //   {
+  //   //     app: 'live',
+  //   //     hls: true,
+  //   //     hlsFlags: '[hls_time=2:hls_list_size=3:hls_flags=delete_segments]',
+  //   //     dash: true,
+  //   //     dashFlags: '[f=dash:window_size=3:extra_window_size=5]',
+  //   //   },
+  //   // ],
+  // },
+  relay: {
+    //ffmpeg: '/usr/bin/ffmpeg',
+    ffmpeg: "C:\\ffmpeg\\bin\\ffmpeg.exe",
+    tasks: [
+      {
+        app: 'livefacebook',
+        mode: 'static',
+        edge: 'https://s1-d8.servers.video/mp4/M11185.mp4',
+        name: 'M11185'
+      },
+      {
+        app: 'livefacebook1',
+        mode: 'static',
+        edge: 'https://s1-d8.servers.video/mp4/M11147.mp4',
+        name: 'M11147'
+      }
+    ]
   }
+  // ,trans: {
+  //   ffmpeg: '/usr/local/bin/ffmpeg',
+  //   tasks: [
+  //     {
+  //       app: 'live',
+  //       hls: true,
+  //       hlsFlags: '[hls_time=2:hls_list_size=3:hls_flags=delete_segments]',
+  //       dash: true,
+  //       dashFlags: '[f=dash:window_size=3:extra_window_size=5]'
+  //     }
+  //   ]
+  // }
 };
 
 
